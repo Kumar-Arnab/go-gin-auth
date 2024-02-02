@@ -6,8 +6,9 @@ func RoutePath(server *gin.Engine) {
 	// points to the server initialized at main.go
 	// setting up an handler for an incoming GET request,
 	// server can provide support for GET, POST, PUT, PATCH, DELETE
-	server.GET("/events", getEvents)
-	server.GET("/events/:id", getEvent)
-	server.POST("/events", createEvent)
-	server.PUT("/events/:id", updateEvent)
+	server.GET("/events", GetEvents)
+	server.GET("/events/:id", GetEvent)
+	server.POST("/events", CreateEvent)
+	server.PUT("/events/:id", UpdateEvent)
+	server.DELETE("/events/:id", DeleteEvent)
 }
