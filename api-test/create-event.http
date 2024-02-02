@@ -1,0 +1,9 @@
+POST http://localhost:8081/events
+Content-Type: application/json
+
+{
+    "name": "chutki biral",
+    "description": "dustu biral",
+    "location": "jungle",
+    "date": "2025-01-02T15:30:00.000Z"
+}
