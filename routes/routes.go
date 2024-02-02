@@ -11,4 +11,7 @@ func RoutePath(server *gin.Engine) {
 	server.POST("/events", CreateEvent)
 	server.PUT("/events/:id", UpdateEvent)
 	server.DELETE("/events/:id", DeleteEvent)
+
+	// users routes
+	server.POST("/signup", SignUp)
 }
