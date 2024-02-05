@@ -24,7 +24,7 @@ func GenerateToken(email string, userId int64) (string, error) {
 	return token.SignedString([]byte(secretKey))
 }
 
-func ValidateToken(token string) error {
+func ValidateToken(token string) (int64, error) {
 	parsedToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
 		// checking the signing algo used to encrypt the token
 		// .(____) is a method for checking in go for a specific type
@@ -37,26 +37,24 @@ func ValidateToken(token string) error {
 	})
 
 	if err != nil {
-		return errors.New("Could not parse token")
+		return 0, errors.New("Could not parse token")
 	}
 
 	if !parsedToken.Valid {
-		return errors.New("Invalid token")
+		return 0, errors.New("Invalid token")
 	}
 
-	/*
-		claims, ok := parsedToken.Claims.(jwt.MapClaims)
+	claims, ok := parsedToken.Claims.(jwt.MapClaims)
 
-		if !ok {
-			return errors.New("Invalid token claims.")
-		}
+	if !ok {
+		return 0, errors.New("Invalid token claims.")
+	}
 
-		// jwt.MapClaims values are essentially a map type
-		// the fields name are same as the field name we used to set claims in our previous function
-		// also we can match the types using go's .() specific type check property
-		email := claims["email"].(string)
-		userId := claims["userId"].(int64)
-	*/
+	// jwt.MapClaims values are essentially a map type
+	// the fields name are same as the field name we used to set claims in our previous function
+	// also we can match the types using go's .() specific type check property
+	// email := claims["email"].(string)
+	userId := claims["userId"].(int64)
 
-	return nil
+	return userId, nil
 }
