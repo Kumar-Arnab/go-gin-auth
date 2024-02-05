@@ -14,4 +14,7 @@ func RoutePath(server *gin.Engine) {
 
 	// users routes
 	server.POST("/signup", SignUp)
+
+	// login routes
+	server.POST("/login", Login)
 }
