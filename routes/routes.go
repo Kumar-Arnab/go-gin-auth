@@ -1,6 +1,9 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/Kumar-Arnab/events-rests-auth/middleware"
+	"github.com/gin-gonic/gin"
+)
 
 func RoutePath(server *gin.Engine) {
 	// points to the server initialized at main.go
@@ -8,9 +11,13 @@ func RoutePath(server *gin.Engine) {
 	// server can provide support for GET, POST, PUT, PATCH, DELETE
 	server.GET("/events", GetEvents)
 	server.GET("/events/:id", GetEvent)
-	server.POST("/events", CreateEvent)
-	server.PUT("/events/:id", UpdateEvent)
-	server.DELETE("/events/:id", DeleteEvent)
+
+	// creating a group of routes
+	authenticatedGoup := server.Group("/")
+	authenticatedGoup.Use(middleware.Authenticate)
+	authenticatedGoup.POST("/events", CreateEvent)
+	authenticatedGoup.PUT("/events/:id", UpdateEvent)
+	authenticatedGoup.DELETE("/events/:id", DeleteEvent)
 
 	// users routes
 	server.POST("/signup", SignUp)

@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/Kumar-Arnab/events-rests-auth/models"
-	"github.com/Kumar-Arnab/events-rests-auth/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,33 +24,18 @@ func GetEvents(context *gin.Context) {
 }
 
 func CreateEvent(context *gin.Context) {
-	// extracting the jwt token from the request header(Authorization)
-	token := context.Request.Header.Get("Authorization")
-
-	// if token is passed
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "Not Authorized"})
-		return
-	}
-
-	userId, err := utils.ValidateToken(token)
-
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "Not Authorized"})
-		return
-	}
-
 	var event models.Event
 
 	// we pass a pointer of the variable that has to be populated with data
 	// internally gin will take a look from the json body and store the body into a variable
-	err = context.ShouldBindJSON(&event)
+	err := context.ShouldBindJSON(&event)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request data." + err.Error()})
 		return
 	}
 
+	userId := context.GetInt64("userId")
 	event.UserID = userId
 
 	savedEvent, er := event.Save()
@@ -88,10 +72,17 @@ func UpdateEvent(context *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEventById(eventId)
+	userId := context.GetInt64("userId")
+	event, err := models.GetEventById(eventId)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": fmt.Sprintf("Could not parse event Id. %+v", err)})
+		return
+	}
+
+	// check: only logged in user is allowed to update the event
+	if event.UserID != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "Not Authorized to update this event"})
 		return
 	}
 
@@ -124,10 +115,17 @@ func DeleteEvent(context *gin.Context) {
 		return
 	}
 
+	userId := context.GetInt64("userId")
 	event, err := models.GetEventById(eventId)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": fmt.Sprintf("Could not parse event Id. %+v", err)})
+		return
+	}
+
+	// check: only logged in user is allowed to delete the event
+	if event.UserID != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "Not Authorized to delete this event"})
 		return
 	}
 

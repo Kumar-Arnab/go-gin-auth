@@ -54,7 +54,7 @@ func ValidateToken(token string) (int64, error) {
 	// the fields name are same as the field name we used to set claims in our previous function
 	// also we can match the types using go's .() specific type check property
 	// email := claims["email"].(string)
-	userId := claims["userId"].(int64)
+	userId := int64(claims["userId"].(float64))
 
 	return userId, nil
 }
