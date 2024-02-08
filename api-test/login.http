@@ -1,0 +1,9 @@
+POST http://localhost:8081/login
+Content-Type: application/json
+
+{
+    "email": "dev@gmail.com",
+    "password": "dev12345"
+}
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldkBnbWFpbC5jb20iLCJleHAiOjE3MDczMzMwNzIsInVzZXJJZCI6M30.EFCvfPzS9tXIefg8d417uSFaNKABcrSwZIXlzZVM1bc

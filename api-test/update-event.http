@@ -1,10 +1,10 @@
-POST http://localhost:8081/events
+PUT http://localhost:8081/events/4
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldkBnbWFpbC5jb20iLCJleHAiOjE3MDczMzMwNzIsInVzZXJJZCI6M30.EFCvfPzS9tXIefg8d417uSFaNKABcrSwZIXlzZVM1bc
 
 {
-    "name": "daru party",
-    "description": "daru with chana",
+    "name": "chicken party",
+    "description": "daru with chicken",
     "location": "PG",
     "date": "2025-02-10T15:30:00.000Z"
 }

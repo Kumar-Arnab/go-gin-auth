@@ -7,15 +7,13 @@ import (
 )
 
 type Event struct {
-	ID          int64
+	ID          int64	  `json:"id"`
 	Name        string    `binding:"required" json:"name"`
 	Description string    `binding:"required" json:"description"`
 	Location    string    `binding:"required" json:"location"`
 	DateTime    time.Time `binding:"required" json:"date"`
-	UserID      int64
+	UserID      int64	  `json:"user_id"`
 }
-
-var events []Event = []Event{}
 
 func (e Event) Save() (Event, error) {
 	// ? is a sql injection safe way of injecting values in this query

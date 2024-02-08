@@ -1,0 +1,3 @@
+DELETE  http://localhost:8081/events/5
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldkBnbWFpbC5jb20iLCJleHAiOjE3MDczMzMwNzIsInVzZXJJZCI6M30.EFCvfPzS9tXIefg8d417uSFaNKABcrSwZIXlzZVM1bc
